@@ -57,27 +57,18 @@ const deleteProduct = (req, res) => {
 };
 
 const getOneProduct = (req, res) => {
-  const { id } = req.params;
-  res.json({
-    'id': id,
-    'name': 'Teclado Gamer',
-    'price': 120000,
-    'category': 'Tecnology'
-  });
-};
-
-const userLimitOffset = (req, res) => {
-  const { limit, offset } = req.query;
-  if(limit && offset){
+  try {
+    const { id } = req.params;
     res.json({
-      limit,
-      offset,
+      'id': id,
+      'name': 'Teclado Gamer',
+      'price': 120000,
+      'category': 'Tecnology'
     });
-  } else{
-    res.send('No hay ningun parametro')
+  } catch (error) {
+    console.log(error)
   }
 };
-
 
 
 module.exports = {
@@ -86,5 +77,4 @@ module.exports = {
   updProductById,
   deleteProduct,
   getOneProduct,
-  userLimitOffset
 }
