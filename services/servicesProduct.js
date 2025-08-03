@@ -1,5 +1,4 @@
 const faker = require('faker');
-
 const getAllProducts = (req, res) => {
   try {
     const products = [];
