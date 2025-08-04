@@ -45,13 +45,16 @@ const updProductById = (req, res) => {
 
 const deleteProduct = (req, res) => {
   try {
-    const {id} = req.params;
-    res.json({
+    const { id } = req.params;
+    const response = {
       message: 'Product deleted',
       id,
-    });
+    };
+    console.log('📦 Enviando respuesta DELETE:', response);
+    res.status(200).json(response);
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).json({ error: 'Error deleting product' });
   }
 };
 
