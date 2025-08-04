@@ -1,4 +1,5 @@
 const express = require('express');
+const {errorLogs, handlerError} = require('./middleware/error.handler')
 const apiRouter = require('./server')
 const app = express();
 const port = 3000;
@@ -12,6 +13,8 @@ app.get('/',function(req, res){
 });
 
 apiRouter(app);
+app.use(errorLogs);
+app.use(handlerError);
 
 app.listen(port, function(req, res) {
   console.log(`Puerto escuchado en el ${port}`)
