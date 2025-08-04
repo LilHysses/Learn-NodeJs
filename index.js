@@ -13,7 +13,7 @@ app.use(express.json());
 //la req es la request osea la peticion
 //la res es la respuesta de esa peticion
 app.get('/',function(req, res){
-  res.send('Hola mundo');
+  res.send('Hola mundo, jadith es GAY');
 });
 
 apiRouter(app);
