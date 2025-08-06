@@ -1,20 +1,17 @@
 const faker = require('faker');
-const getAllProducts = (req, res) => {
+const pool = require('../libs/mysql');
+
+const getAllProducts = async (req, res) => {
   try {
-    const products = [];
-    const size = parseInt(req.query.size) || 5;
-    for(let index = 0; index < size; index++){
-      products.push({
-        name: faker.commerce.productName(),
-        price: parseInt(faker.commerce.price(), 10),
-        image: faker.image.imageUrl(),
-      });
-    }
-    return products;
+    const query = "SELECT * FROM task";
+    const [rows] = await pool.query(query);
+    return res.json(rows); // 👈 Ahora sí, devuelves los datos como respuesta
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    return res.json({ message: 'Internal server error' });
   }
 };
+
 
 const createNewProduct = (req, res) => {
   try {
