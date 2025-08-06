@@ -1,12 +1,16 @@
 const faker = require('faker');
+const sequelize = require('../libs/sequelize');
 const pool = require('../libs/mysql');
 
 const getAllProducts = async (req, res) => {
   try {
+
     const query = "SELECT * FROM task";
-    const [rows] = await pool.query(query);
-    return res.json(rows); // 👈 Ahora sí, devuelves los datos como respuesta
+    const [data] = await sequelize.query(query);
+    return res.json({ data }) // 👈 Ahora sí, devuelves los datos como respuesta
+
   } catch (error) {
+
     console.error(error);
     return res.json({ message: 'Internal server error' });
   }
