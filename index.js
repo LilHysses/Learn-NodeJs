@@ -1,16 +1,19 @@
 const express = require('express');
-const {errorLogs, handlerError} = require('./middleware/error.handler')
 const apiRouter = require('./server')
+const cors = require('cors');
+const {errorLogs, handlerError} = require('./middleware/error.handler')
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
+
+app.use(cors());
 
 app.use(express.json());
 
 //la req es la request osea la peticion
 //la res es la respuesta de esa peticion
 app.get('/',function(req, res){
-  res.send('Hola mundo');
+  res.send('Hola mundo, jadith es GAY');
 });
 
 apiRouter(app);
