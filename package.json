@@ -6,7 +6,11 @@
     "dev": "nodemon index.js",
     "start": "node index.js",
     "lint": "eslint",
-    "test": "mocha"
+    "test": "mocha",
+    "migrations:generate": "sequelize-cli migration:generate --name",
+    "migrations:run": "sequelize-cli db:migrate",
+    "midrations:revert": "sequelize-cli db:migrate:undo",
+    "migrations:delete": "sequelize-cli db:migrate:undo:all"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +23,7 @@
     "mocha": "^11.7.1",
     "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
+    "sequelize-cli": "^6.6.3",
     "supertest": "^7.1.4"
   },
   "dependencies": {

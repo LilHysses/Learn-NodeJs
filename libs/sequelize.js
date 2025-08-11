@@ -16,8 +16,6 @@ const sequelize = new Sequelize(
 
 setupModels(sequelize);
 
-sequelize.sync();
-
 
 sequelize.authenticate()
   .then(() => {

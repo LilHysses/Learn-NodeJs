@@ -9,6 +9,5 @@ const config = {
   dbName: process.env.DB_NAME,
   dbPort: process.env.DB_PORT,
 };
-console.log('✅ Variables de entorno cargadas:', config);
 
 module.exports = { config };
