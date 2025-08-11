@@ -1,5 +1,3 @@
-const Datatype = require('faker/lib/datatype');
-const Unique = require('faker/lib/unique');
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
 const USER_TABLE = 'users';
@@ -34,8 +32,11 @@ const UserSchema = {
 }
 
 class User extends Model {
-  static associate() {
-
+  static associate(models) {
+    this.hasOne(models.Client, {
+      as: 'client',
+      foreignKey: 'userId'
+    })
   }
   static config(sequelize){
     return{
