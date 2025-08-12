@@ -3,7 +3,9 @@ const {boom} = require('@hapi/boom');
 const {models} = require('../libs/sequelize');
 
 const getAllUsers = async () => {
-  const response = await models.User.findAll()
+  const response = await models.User.findAll({
+    include: ['client']
+  })
   return response;
 }
 
