@@ -1,78 +1,66 @@
-const faker = require('faker');
-const sequelize = require('../libs/sequelize');
-const pool = require('../libs/mysql');
+const { models } = require('../libs/sequelize');
 
-const getAllProducts = async (req, res) => {
+const getAllProducts = async () => {
   try {
-
-    const query = "SELECT * FROM task";
-    const [data] = await sequelize.query(query);
-    return res.json({ data }) // 👈 Ahora sí, devuelves los datos como respuesta
-
+    const data = await models.Product.findAll({
+      include: ['category']
+    });
+    return data;
   } catch (error) {
-
     console.error(error);
-    return res.json({ message: 'Internal server error' });
+    throw new Error('Internal server error');
   }
 };
 
-
-const createNewProduct = (req, res) => {
+const createNewProduct = async (body) => {
   try {
-    const body = req.body;
-    console.log(body);
-    res.json({
-      ok: true,
-      data: body
-    });
+    const newProduct = await models.Product.create(body);
+    return newProduct;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw new Error('Error creating product');
   }
 };
 
-const updProductById = (req, res) => {
+const updProductById = async (id, body) => {
   try {
-    const {id} = req.params;
-    const body = req.body;
-    res.json({
-      message: 'Update Success',
-      product: body,
-      id,
-    });
+    const product = await models.Product.findByPk(id);
+    if (!product) return null;
+
+    const updated = await product.update(body);
+    return updated;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw new Error('Error updating product');
   }
 };
 
-const deleteProduct = (req, res) => {
+const deleteProduct = async (id) => {
   try {
-    const { id } = req.params;
-    const response = {
+    console.log(id);
+    const product = await models.Product.findByPk(id);
+    if (!product) return null;
+
+    await product.destroy();
+    return {
       message: 'Product deleted',
-      id,
+      id
     };
-    console.log('📦 Enviando respuesta DELETE:', response);
-    res.status(200).json(response);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error deleting product' });
+    throw new Error('Error deleting product');
   }
 };
 
-const getOneProduct = (req, res) => {
+const getOneProduct = async (id) => {
   try {
-    const { id } = req.params;
-    res.json({
-      'id': id,
-      'name': 'Teclado Gamer',
-      'price': 120000,
-      'category': 'Tecnology'
-    });
+    const product = await models.Product.findByPk(id);
+    return product || null;
   } catch (error) {
-    console.log(error)
+    console.error(error);
+    throw new Error('Error fetching product');
   }
 };
-
 
 module.exports = {
   getAllProducts,
@@ -80,4 +68,4 @@ module.exports = {
   updProductById,
   deleteProduct,
   getOneProduct,
-}
+};
